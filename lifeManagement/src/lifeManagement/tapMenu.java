@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,11 +17,12 @@ public class tapMenu extends JPanel {
 	JButton createB;
 	JPanel form, main;
 	JButton todoB, diaryB;
-	JLabel gap;
+	JLabel gap, gap2, gapS;
 	JPanel buttonP;
 	
 	Font f1 = new Font("KoPub돋움체 Medium", Font.BOLD, 30);
 	Font f2 = new Font("KoPub돋움체 Light", Font.PLAIN, 15);
+	Font f4 = new Font("KoPub돋움체 Medium", Font.PLAIN, 25);
 	
 	ImageIcon diaryImg = new ImageIcon("./image/diaryButton.png");
 	ImageIcon todoImg = new ImageIcon("./image/todoButton.png");
@@ -40,6 +39,10 @@ public class tapMenu extends JPanel {
 	//갭 레이블
 	gap = new JLabel(" ");
 	gap.setPreferredSize(new Dimension(50, 10));
+	gap2 = new JLabel(" ");
+	gap2.setPreferredSize(new Dimension(100, 10));
+	gapS = new JLabel(" ");
+	gapS.setPreferredSize(new Dimension(10, 10));
 	
 	//일기 메인 패널
 	main = new JPanel();

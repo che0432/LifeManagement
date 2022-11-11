@@ -28,20 +28,20 @@ import javax.swing.table.DefaultTableModel;
 			table = new JTable(model);
 			
 			//컬럼넣어주기
-			model.addColumn("����");
-			model.addColumn("��¥");
+			model.addColumn("제목");
+			model.addColumn("날짜");
 			
 			//값 넣어주기
 			for(int i=0; i<=7; i++){
 				model.addRow(new Object[0]);
-				model.setValueAt("�ϱ� ����", i, 0);
+				model.setValueAt("일기 제목", i, 0);
 				model.setValueAt("2022-11-11", i, 1);
 			}
 			
-			table.getColumn("����").setPreferredWidth(100);
-			table.getColumn("��¥").setPreferredWidth(10);
+			table.getColumn("제목").setPreferredWidth(500);
+			table.getColumn("날짜").setPreferredWidth(10);
 			table.setBackground(Color.white);
-			//table.setPreferredScrollableViewportSize(new Dimension(410, 470));
+			table.setPreferredScrollableViewportSize(new Dimension(800, 600));
 			table.setFillsViewportHeight(true);
 			table.getTableHeader().setReorderingAllowed(false);
 			table.getTableHeader().setResizingAllowed(false);

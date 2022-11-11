@@ -1,13 +1,9 @@
 package lifeManagement;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -23,12 +19,14 @@ import javax.swing.JTextArea;
 public class todoList extends JPanel implements FocusListener {
 	JLabel today;
 	JTextArea memo;
-
+	
+	String msg;
+	
 	tapMenu menu = new tapMenu();
 	
 	Color memoColor = new Color(255,250,176);
 	Color memoFontColor = new Color(192,109,21);
-	Font mf = new Font("KoPub돋움체 medium", Font.PLAIN, 15);
+	Font mf = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
 	
 	todoList(){
 		
@@ -50,23 +48,20 @@ public class todoList extends JPanel implements FocusListener {
 		memoP.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		memoP.setLayout(new BorderLayout());
 		memoP.setBackground(Color.white);
-		memo = new JTextArea("내용을 입력하세요.");
+		msg = "내용을 입력하세요.";
+		memo = new JTextArea(msg);
 		memo.setFont(mf);
 		memo.setForeground(memoFontColor);
 		memo.setBackground(memoColor);
 		memo.setLineWrap(true);
 
 		memoP.add(new JScrollPane(memo), BorderLayout.CENTER);
+		
+		//FocusListener구현
 		memo.addFocusListener(this);
-		//클릭할시 내용 초기화 하는 함수 작성 필요
-		/*
-		memo.addFocusListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JTextField t = (JTextField)e.getSource();
-				t.setText(""); 
-			}
-		});
-		*/
+		
+		//클릭할시 내용 초기화 하는 함수 작성 필요 FocusListener
+
 		
 		CMP.add("North", calenderP);
 		CMP.add("South", memoP);
@@ -143,13 +138,13 @@ public class todoList extends JPanel implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(this.msg == "내용을 입력하세요.")
+			memo.setText(""); 
+		//계속 초기화 되므로 알아봐야함
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
+		//데이터 저장 구현 필요
 	}
 }
