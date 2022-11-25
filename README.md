@@ -36,7 +36,7 @@ diaryDetail.java - (구현 예정) 일기 상세 페이지
 diaryEdit.java - (구현 예정) 일기 수정 페이지  
 memo.java - (memo.text 파일 읽기 함수 구현 필요) 메모 페이지
 
-# back
+# back 
 --추가 예정  
 todoWriteSave.java - todo 항목 추가  
 todoEditSave.java - todo 내용 수정(체크박스, 내용, 날짜)  
@@ -44,6 +44,6 @@ diaryWriteSave.java - (구현 예정) diary 항목 추가
 diaryEditSave.java - diary 내용 수정(제목, 내용, 날짜)  
 memoSave.java - (구현 예정) memo.txt 파일 수정
 
-#db
+# db  
 lifeDAO.java - DB 연결, 쿼리문 전달(Create, Detail, Select, delete)  
 lifeDTO.java - getter&setter 값 가져오고 변경하기
