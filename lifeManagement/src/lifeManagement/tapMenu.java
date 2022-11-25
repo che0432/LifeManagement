@@ -1,4 +1,4 @@
-package lifeManagement;
+package front;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 public class tapMenu extends JPanel {
 	JButton createB;
 	JPanel form, main;
-	JButton todoB, diaryB;
+	JButton todoB, diaryB, memoB;
 	JLabel gap, gap2, gapS;
+
 	JPanel buttonP;
 	
 	Font f1 = new Font("KoPub돋움체 Medium", Font.BOLD, 30);
@@ -26,6 +27,7 @@ public class tapMenu extends JPanel {
 	
 	ImageIcon diaryImg = new ImageIcon("./image/diaryButton.png");
 	ImageIcon todoImg = new ImageIcon("./image/todoButton.png");
+	ImageIcon memoImg = new ImageIcon("./image/memoButton.png");
 	ImageIcon createImg = new ImageIcon("./image/createButton.png");
 	ImageIcon createRolloverImg = new ImageIcon("./image/createRolloverButton.png");
 	
@@ -57,12 +59,15 @@ public class tapMenu extends JPanel {
 	
 	todoB = new JButton(todoImg);
 	diaryB = new JButton(diaryImg);
+	memoB = new JButton(memoImg);
 	buttonSet(todoB, "./image/todoButtonClick.png");
 	buttonSet(diaryB, "./image/diaryButtonClick.png");
+	buttonSet(memoB, "./image/memoButtonClick.png");
 	gap = new JLabel(" ");
 	gap.setPreferredSize(new Dimension(100, 10));
 	buttonP.add(todoB);
 	buttonP.add(diaryB);
+	buttonP.add(memoB);
 	
 	//CreateB 생성 버튼
 	createB = new JButton(createImg);
@@ -98,5 +103,13 @@ public class tapMenu extends JPanel {
 	
 	public JButton getDiaryB(){
 		return diaryB;
+	}
+	
+	public JButton getMemoB() {
+		return memoB;
+	}
+
+	public void setMemoB(JButton memoB) {
+		this.memoB = memoB;
 	}
 }
