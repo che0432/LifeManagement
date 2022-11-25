@@ -1,11 +1,12 @@
 # LifeManagement
 자바 일상관리 애플리케이션 구현  
 To-do List, Memo, Diary  
-DB없이 JSON 파일로 읽기 쓰기 구현 예정  
 
 사용 언어: Java, swing  
+DB: MySQL  
 IDE: 이클립스  
-개발 플랫폼: 윈도우
+개발 플랫폼: 윈도우  
+--memo는 txt파일 저장으로 구현 예정
 
 # 기능
 -캘린더  
