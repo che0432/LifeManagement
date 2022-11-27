@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,6 +22,15 @@ public class tapMenu extends JPanel {
 	JLabel gap, gap2, gapS;
 
 	JPanel buttonP;
+	
+	//현재 날짜 표시
+	LocalDate now = LocalDate.now();
+	int nowYear = now.getYear();
+	int nowMonthValue = now.getMonthValue();
+	int nowDayOfMonth = now.getDayOfMonth();
+	
+	String monthValue = now.format(DateTimeFormatter.ofPattern("MM"));
+	String yearValue = now.format(DateTimeFormatter.ofPattern("yyyy"));
 	
 	Font f1 = new Font("KoPub돋움체 Medium", Font.BOLD, 30);
 	Font f2 = new Font("KoPub돋움체 Light", Font.PLAIN, 15);
@@ -109,7 +120,8 @@ public class tapMenu extends JPanel {
 		return memoB;
 	}
 
-	public void setMemoB(JButton memoB) {
-		this.memoB = memoB;
+	public JButton getCreateB() {
+		return createB;
 	}
+
 }

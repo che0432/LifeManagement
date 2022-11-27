@@ -3,28 +3,43 @@ package front;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import back.todoCheck;
+import back.todoDeleteSave;
+import back.todoEditSave;
 import back.todoWriteSave;
 
 public class todoList extends JPanel implements ActionListener {
-	JLabel todoDay;
-	
+	public static String todoPickDate;
 	tapMenu menu = new tapMenu();
+	calendar c = new calendar();
+	toTable toT;
+	doTable doT;
+	JButton todoReadB, todoUpdateB, todoDeleteB;
+	JTabbedPane pane;
+	
+    //JDatePicker
+    Properties p = new Properties();
+    
+    UtilDateModel model = new UtilDateModel();
+    JDatePanelImpl datePanel = new JDatePanelImpl(model,p);
+	JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 	
 	todoList(){
 		
@@ -38,11 +53,9 @@ public class todoList extends JPanel implements ActionListener {
 		JPanel calenderP = new JPanel();
 		calenderP.setLayout(new BorderLayout());
 		calenderP.setBackground(Color.darkGray);
+		
 		//캘린더 추가 구현필요
-		
-		
-		
-
+		calenderP.add(c.form);
 		
 		CMP.add("North", calenderP);
 		//todo 넣기
@@ -53,9 +66,17 @@ public class todoList extends JPanel implements ActionListener {
 		todoInfoP.setBackground(Color.white);
 		todoInfoP.setLayout(new BorderLayout());
 		todoInfoP.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-		todoDay = new JLabel("2022-11-12");
-		todoDay.setFont(menu.f1);
-		todoInfoP.add("West", todoDay);
+		//JDatePicker 구현
+		p.put("text.today", "Today");
+	    p.put("text.month", "Month");
+	    p.put("text.year", "Year");
+	    
+		model.setDate(menu.nowYear, menu.nowMonthValue-1, menu.nowDayOfMonth);
+		model.setSelected(true);
+		
+		todoPickDate = datePicker.getJFormattedTextField().getText();
+		
+		todoInfoP.add("West", datePicker);
 		todoInfoP.add("Center", menu.gap);
 		todoInfoP.add("East", menu.createB);
 		
@@ -72,20 +93,27 @@ public class todoList extends JPanel implements ActionListener {
 		JPanel tableP = new JPanel();
 		tableP.setBackground(Color.white);
 		//탭 추가
-		JTabbedPane pane = new JTabbedPane(JTabbedPane.TOP);
+		pane = new JTabbedPane(JTabbedPane.TOP);
 		pane.setPreferredSize(new Dimension(430, 530));
 		pane.setBackground(Color.white);
 		JPanel toP = new JPanel();
 		toP.setBackground(Color.white);
 		JPanel doP = new JPanel();
 		doP.setBackground(Color.white);
-		toTable toT = new toTable();
-		doTable doT = new doTable();
+		
+		toT = new toTable();
+		doT = new doTable();
 		toT.setBackground(Color.white);
 		toT.setFont(menu.f2);
 		doT.setBackground(Color.white);
 		doT.setFont(menu.f2);
-		toP.add(toT);	doP.add(doT);
+		toP.add(toT);
+		doP.add(doT);
+		
+		toT.addMouseListener(new MoEvent());
+		doT.addMouseListener(new MoEvent());
+		
+		
 		//할 일, 완료 table을 패널에 넣고 tap에 추가
 		pane.addTab("할 일", toP);
 		pane.addTab("완료", doP);
@@ -94,11 +122,16 @@ public class todoList extends JPanel implements ActionListener {
 		JPanel todoButtonP = new JPanel();
 		todoButtonP.setBackground(Color.white);
 		todoButtonP.setPreferredSize(new Dimension(550, 50));
-		JButton todoUpdateB = new JButton("수정");
-		JButton todoDeleteB = new JButton("삭제");
+		todoReadB = new JButton("날짜 조회");
+		todoUpdateB = new JButton("수정");
+		todoDeleteB = new JButton("삭제");
 		//수정, 삭제 버튼 디자인 구현 필요
+		todoButtonP.add(todoReadB);
 		todoButtonP.add(todoUpdateB);
 		todoButtonP.add(todoDeleteB);
+	
+		todoUpdateB.addActionListener(this);
+		todoDeleteB.addActionListener(this);
 		
 		todoTapP.add("Center",tableP);
 		todoTapP.add("South",todoButtonP);
@@ -120,14 +153,64 @@ public class todoList extends JPanel implements ActionListener {
 		
 		add("Center", menu.form);
 	}
-
+	
+	//아직 덜 구현함
+	class MoEvent extends MouseAdapter{
+		@Override
+		 public void mouseClicked(MouseEvent e) {
+			 todoCheck tc;
+			 System.out.println("pane.getSelectedIndex(): "+pane.getSelectedIndex());
+			 if (pane.getSelectedIndex() == 0){
+				 if (((boolean)toT.todoCheckValue()) == true){
+					 int toNo = (int) toT.todoNoValue();
+					 tc = new todoCheck(true, toNo);
+					 toT.toTableRead();
+					 doT.doTableRead();
+				 }
+			 }else if(pane.getSelectedIndex() == 1)
+				 if (((boolean)doT.todoCheckValue()) == false){
+					 int doNo = (int) doT.todoNoValue();
+					 tc = new todoCheck(false, doNo);
+					 toT.toTableRead();
+					 doT.doTableRead();
+				 }
+		 }
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()== menu.createB) {
 			String Contents = JOptionPane.showInputDialog(this, "To-Do 내용 입력");
-			String todoDate = todoDay.getText();
-			todoWriteSave tws = new todoWriteSave(Contents, todoDate);
+			todoPickDate = datePicker.getJFormattedTextField().getText(); //JDatePicker로 지정한 날짜 전송
+			todoWriteSave tws = new todoWriteSave(Contents, todoPickDate);
+			toT.toTableRead();
+		}else if(e.getSource()==todoUpdateB){
+			todoEditSave tes;
+			if (pane.getSelectedIndex() == 0){
+				int toNo = (int) toT.todoNoValue();
+				String Contents = JOptionPane.showInputDialog(this, "To-Do 수정", (String) toT.todoContentsValue());
+				tes = new todoEditSave(Contents, toNo);
+				toT.toTableRead();
+			}else if(pane.getSelectedIndex() == 1){
+				int doNo = (int) doT.todoNoValue();
+				String Contents = JOptionPane.showInputDialog(this, "To-Do 수정", (String) doT.todoContentsValue());
+				tes = new todoEditSave(Contents, doNo);
+				doT.doTableRead();
 			}
+		}else if(e.getSource()==todoDeleteB){
+			todoDeleteSave tds;
+			if (pane.getSelectedIndex() == 0){
+				int toNo = (int) toT.todoNoValue();
+				tds = new todoDeleteSave(toNo);
+				JOptionPane.showMessageDialog(this, "삭제되었습니다.", "삭제 완료 메세지",JOptionPane.PLAIN_MESSAGE );
+				toT.toTableRead();
+			}else if(pane.getSelectedIndex() == 1){
+				int doNo = (int) doT.todoNoValue();
+				tds = new todoDeleteSave(doNo);
+				JOptionPane.showMessageDialog(this, "삭제되었습니다.", "삭제 완료 메세지",JOptionPane.PLAIN_MESSAGE );
+				doT.doTableRead();
+			}
+		}
 		
 	}
 }
