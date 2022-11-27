@@ -16,7 +16,7 @@ public class todoCheck {
 			ldao.PST.setInt(2, b);
 				
 			ldao.PST.executeUpdate();
-				System.out.println(" check변경  성공했습니다 "); 
+			System.out.println("check변경  성공했습니다 "); 
 			 }catch(Exception ex){System.out.println("todoCheck.java 수정에러 " + ex);}
 	}
 }

@@ -75,11 +75,11 @@ public class lifeDAO {
 		}catch(Exception ex){System.out.println(ex); }
 	}
 	
-	public ArrayList<todoModel> readTodo(){
+	public ArrayList<todoModel> readTo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
-			String whereDate = "&& DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
-			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 " + whereDate
+			String whereDate = "DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
+			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 && " + whereDate
 				+ "ORDER BY todo_no asc";
 			ST = CN.createStatement();
 			RS = ST.executeQuery(msg);
@@ -97,11 +97,55 @@ public class lifeDAO {
 		return arr;
 	}
 	
-	public ArrayList<todoModel> readTodo(String Date){
+	public ArrayList<todoModel> readDo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
-			String whereDate = "&& DATE(todoDate) = \'" + Date + "\'";
-			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 " + whereDate
+			String whereDate = "DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
+			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 1 && " + whereDate
+				+ "ORDER BY todo_no asc";
+			ST = CN.createStatement();
+			RS = ST.executeQuery(msg);
+			while (RS.next()==true) {
+                arr.add(new todoModel(RS.getInt(1), RS.getBoolean(2), RS.getString(3), RS.getString(4)));
+			}
+		}catch(Exception e){System.out.println("출력연결에러 " + e);
+		}finally {
+            try {
+                ST.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+		return arr;
+	}
+	
+	public ArrayList<todoModel> readTo(String Date){
+		ArrayList<todoModel> arr = new ArrayList<todoModel>();
+		try{
+			String whereDate = " DATE(todoDate) = \'" + Date + "\'";
+			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 && "  + whereDate
+				+ "ORDER BY todo_no asc";
+			ST = CN.createStatement();
+			RS = ST.executeQuery(msg);
+			while (RS.next()==true) {
+                arr.add(new todoModel(RS.getInt(1), RS.getBoolean(2), RS.getString(3), RS.getString(4)));
+			}
+		}catch(Exception e){System.out.println("출력연결에러 " + e);
+		}finally {
+            try {
+                ST.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+		return arr;
+	}
+	
+	public ArrayList<todoModel> readDo(String Date){
+		ArrayList<todoModel> arr = new ArrayList<todoModel>();
+		try{
+			String whereDate = " DATE(todoDate) = \'" + Date + "\'";
+			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 1 &&" + whereDate
 				+ "ORDER BY todo_no asc";
 			ST = CN.createStatement();
 			RS = ST.executeQuery(msg);

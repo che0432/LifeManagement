@@ -110,8 +110,8 @@ public class todoList extends JPanel implements ActionListener {
 		toP.add(toT);
 		doP.add(doT);
 		
-		toT.addMouseListener(new MoEvent());
-		doT.addMouseListener(new MoEvent());
+		toT.table.addMouseListener(new MoEvent());
+		doT.table.addMouseListener(new MoEvent());
 		
 		
 		//할 일, 완료 table을 패널에 넣고 tap에 추가
@@ -159,20 +159,24 @@ public class todoList extends JPanel implements ActionListener {
 		@Override
 		 public void mouseClicked(MouseEvent e) {
 			 todoCheck tc;
+			 todoPickDate = datePicker.getJFormattedTextField().getText();
+			 System.out.println(todoPickDate);
 			 System.out.println("pane.getSelectedIndex(): "+pane.getSelectedIndex());
 			 if (pane.getSelectedIndex() == 0){
+				 System.out.println(((boolean)toT.todoCheckValue()) == true);
 				 if (((boolean)toT.todoCheckValue()) == true){
 					 int toNo = (int) toT.todoNoValue();
 					 tc = new todoCheck(true, toNo);
-					 toT.toTableRead();
-					 doT.doTableRead();
+					 toT.toTableRead(todoPickDate);
+					 doT.doTableRead(todoPickDate);
 				 }
 			 }else if(pane.getSelectedIndex() == 1)
+				 System.out.println(((boolean)doT.todoCheckValue()) == false);
 				 if (((boolean)doT.todoCheckValue()) == false){
 					 int doNo = (int) doT.todoNoValue();
 					 tc = new todoCheck(false, doNo);
-					 toT.toTableRead();
-					 doT.doTableRead();
+					 toT.toTableRead(todoPickDate);
+					 doT.doTableRead(todoPickDate);
 				 }
 		 }
 	}

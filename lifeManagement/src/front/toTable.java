@@ -57,40 +57,38 @@ public class toTable  extends JPanel {
 	public void toTableRead(){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
-		
-		ArrayList<todoModel> arr = new ArrayList<todoModel>();
-		arr = ldao.readTodo();
-		
-		//목록 조회
-		for(int i=0; i<=arr.size()-1; i++){
-			if((boolean)arr.get(i).isTodoCheck() == false){
-				model.addRow(new Object[0]);
+		try{
+			ArrayList<todoModel> arr = new ArrayList<todoModel>();
+			arr = ldao.readTo();
+			
+			//목록 조회
+			for(int i=0; i<=arr.size(); i++){
+				System.out.println(arr.size());
+				model.addRow(new Object[i]);
 				model.setValueAt((Integer)arr.get(i).getTodo_no(), i, 0);
 				model.setValueAt((boolean)arr.get(i).isTodoCheck(), i, 1);
 				model.setValueAt((String)arr.get(i).getTodoContents(), i, 2);
-				model.addRow(new Object[1]);
+				model.addRow(new Object[i+1]);
 			}
-		}
+		}catch(IndexOutOfBoundsException e) {System.out.println(e);}
 	}
 	
 	public void toTableRead(String Date){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
-		
-		ArrayList<todoModel> arr = new ArrayList<todoModel>();
-		arr = ldao.readTodo(Date);
-		System.out.println("toTableRead내부"+Date);
-		
-		//목록 조회
-		for(int i=0; i<=arr.size()-1; i++){
-			if((boolean)arr.get(i).isTodoCheck() == false){
+		try{
+			ArrayList<todoModel> arr = new ArrayList<todoModel>();
+			arr = ldao.readTo(Date);
+			
+			//목록 조회
+			for(int i=0; i<=arr.size(); i++){
 				model.addRow(new Object[0]);
 				model.setValueAt((Integer)arr.get(i).getTodo_no(), i, 0);
 				model.setValueAt((boolean)arr.get(i).isTodoCheck(), i, 1);
 				model.setValueAt((String)arr.get(i).getTodoContents(), i, 2);
 				model.addRow(new Object[1]);
 			}
-		}
+		}catch(IndexOutOfBoundsException e) {System.out.println(e);}
 	}
 	
 	public Object todoNoValue(){

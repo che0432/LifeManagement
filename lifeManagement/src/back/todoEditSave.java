@@ -17,6 +17,6 @@ public class todoEditSave {
 				
 			ldao.PST.executeUpdate();
 				System.out.println(" 수정  성공했습니다 "); 
-			 }catch(Exception ex){System.out.println("todoEditSave.jsp 수정에러 " + ex);}
+			 }catch(Exception ex){System.out.println("todoEditSave.java 수정에러 " + ex);}
 	}
 }
