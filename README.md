@@ -10,12 +10,12 @@ IDE: 이클립스
 
 # 기능
 -캘린더  
--오늘 날짜 표시  
+-오늘 날짜 표시(파란색 글씨)  
 -투두리스트 목록  
 -투두리스트 생성  
 -투두리스트 수정  
 -투두리스트 삭제  
--투두리스트 체크박스 표시 시 완료 탭으로 옮겨감 (구현 예정)
+-투두리스트 체크박스 표시 시 완료 탭으로 옮겨감
 
 -메모 작성  
 -메모 수정  
@@ -52,3 +52,5 @@ diaryEditSave.java - diary 내용 수정(제목, 내용, 날짜)
 lifeDAO.java - DB 연결, 쿼리문 전달(Create, Detail, Select, delete)  
 diaryModel.java - diary테이블 getter&setter 값 가져오고 변경하기  
 todoModel.java - todo테이블 getter&setter 값 가져오고 변경하기
+
+--디자인 수정 예정
