@@ -44,7 +44,7 @@ memo.java - 메모 JFrame
 todoWriteSave.java - todo 항목 추가  
 todoEditSave.java - todo 내용 수정  
 todoDeleteSave.java - todo 항목 삭제  
-todoCheck.java - todo 상태 변경(true, false)
+todoCheck.java - todo 상태 변경(true, false)  
 diaryWriteSave.java - diary 항목 추가  
 diaryEditSave.java - diary 내용 수정(제목, 내용, 날짜)  
 
