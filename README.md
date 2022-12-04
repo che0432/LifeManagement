@@ -34,7 +34,7 @@ diaryList.java - 일기 JPanel
 toTable.java - 할 일 목록 Tap에 들어갈 테이블  
 doTable.java - 완료 목록 Tap에 들어갈 테이블  
 diaryTable.java - 일기 목록 테이블  
-diaryWrite.java - 일기 입력 페이지 
+diaryWrite.java - 일기 입력 페이지  
 diaryDetail.java - 일기 상세 페이지  
 diaryEdit.java - 일기 수정 페이지  
 memo.java - 메모 JFrame  
