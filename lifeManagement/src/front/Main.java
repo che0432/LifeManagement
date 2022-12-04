@@ -18,8 +18,8 @@ import front.todoList;
 
 public class Main extends JFrame implements ActionListener  {
 	JPanel finalP;
-	lifeDAO ldao = new lifeDAO();
 	diaryModel dm;
+	lifeDAO ldao = new lifeDAO();
 	todoList todoAll = new todoList();
 	diaryList diaryAll = new diaryList();
 	diaryWrite diaryW = new diaryWrite();
@@ -166,7 +166,7 @@ public class Main extends JFrame implements ActionListener  {
 			int month = Integer.parseInt(diaryAll.monthC.getSelectedItem().toString()); 
 			diaryAll.diaryT.diaryTableRead(year, month);
 		}else if(cmd.equals("todoDateRead")){
-			String todoDate = todoAll.datePicker.getJFormattedTextField().getText();
+			String todoDate = todoAll.datePicker.getFormattedTextField().getText().replace(". ", "-");
 			todoAll.toT.toTableRead(todoDate);
 			todoAll.doT.doTableRead(todoDate);
 		}else if(cmd.equals("diaryCreate")){
@@ -179,7 +179,7 @@ public class Main extends JFrame implements ActionListener  {
 		}else if(cmd.equals("diarySave")){
 			String diaryT = diaryW.title.getText(); 
 			String diaryC = diaryW.contents.getText(); 
-			diaryW.diaryPickDate = diaryW.datePicker.getJFormattedTextField().getText();
+			diaryW.diaryPickDate = diaryW.datePicker.getFormattedTextField().getText().replace(". ", "-");
 			diaryWriteSave dws = new diaryWriteSave(diaryT, diaryC, diaryW.diaryPickDate);
 			JOptionPane.showMessageDialog(this, "저장되었습니다.", "저장 완료 메세지",JOptionPane.PLAIN_MESSAGE );
 			
@@ -236,7 +236,7 @@ public class Main extends JFrame implements ActionListener  {
 		}else if(cmd.equals("diaryEditSave")){
 			String diaryT = diaryE.title.getText(); 
 			String diaryC = diaryE.contents.getText(); 
-			diaryE.diaryPickDate = diaryE.datePicker.getJFormattedTextField().getText();
+			diaryE.diaryPickDate = diaryE.datePicker.getFormattedTextField().getText().replace(". ", "-");
 			int diaryN = (int) diaryAll.diaryT.diaryNoValue();
 			
 			diaryEditSave des = new diaryEditSave(diaryT, diaryC, diaryE.diaryPickDate, diaryN);

@@ -1,15 +1,12 @@
 package db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import front.todoList;
-
 
 public class lifeDAO {
 	public Connection CN = null ;
@@ -24,33 +21,11 @@ public class lifeDAO {
 	
 	public String msg = "";
 	
-
-	//DB연결
-	public lifeDAO(){
-		String url = "jdbc:mysql://localhost:3306/lifeManagement?serverTimezone=UTC";
-		String user = "root";
-		String password = "Lifemanagement1234!";
-		String driverName = "com.mysql.cj.jdbc.Driver";
-		
-		System.out.println("lifeDAO() 기본 생성자");
-		try {
-			// ① 로드
-			Class.forName(driverName);
-			// ② 연결
-			CN = DriverManager.getConnection(url, user, password);
-			System.out.println("[연결 성공]");
-		} catch (ClassNotFoundException e) {
-			// `com.mysql.cj.jdbc.Driver` 라는 클래스가 라이브러리로 추가되지 않았다면 오류발생
-			System.out.println("[로드 오류]\n" + e.getStackTrace());
-		} catch (SQLException e) {
-			// DB접속정보가 틀렸다면 오류발생
-			System.out.println("[연결 오류]\n" + e.getStackTrace());
-		}
-	}
-	
 	//todo 생성 함수
 	public void todoCreate(todoModel tm){
 		try {
+			CN = new DBConnect().getCN();
+			
 			msg = "INSERT INTO todo(todoContents, todoDate) VALUES(?,?)";
 			PST = CN.prepareStatement(msg);
 				PST.setString(1, tm.getTodoContents());
@@ -58,11 +33,21 @@ public class lifeDAO {
 		   	PST.executeUpdate();
 		   	System.out.println("todoCreate((todoModel)저장성공");
 		}catch(Exception ex){System.out.println(ex); }
+		finally{
+			 try {
+					if(PST!=null)PST.close();
+					if(CN!=null)CN.close();
+			   } catch (Exception e2) {
+				   e2.printStackTrace();
+			   }
+		}
 	}
 	
 	//diary 생성 함수
 	public void diaryCreate(diaryModel dm){
 		try {
+			CN = new DBConnect().getCN();
+			
 			//diary 날짜 중복 체크 함수 구현 필요
 			msg = "INSERT INTO diary(title, diaryContents, diaryDate) VALUES(?,?,?)";
 			PST = CN.prepareStatement(msg);
@@ -73,11 +58,22 @@ public class lifeDAO {
 		   	System.out.println("diaryCreate(diaryModel)저장성공");
 		   	System.out.println(PST.executeUpdate());
 		}catch(Exception ex){System.out.println(ex); }
+		finally{
+			 try {
+					if(PST!=null)PST.close();
+					if(CN!=null)CN.close();
+			   } catch (Exception e2) {
+				   e2.printStackTrace();
+			   }
+		}
 	}
 	
 	public ArrayList<todoModel> readTo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
+			CN = new DBConnect().getCN();
+			System.out.println("todoList.todoPickDate="+todoList.todoPickDate);
+			
 			String whereDate = "DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
 			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 && " + whereDate
 				+ "ORDER BY todo_no asc";
@@ -89,7 +85,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -100,6 +98,8 @@ public class lifeDAO {
 	public ArrayList<todoModel> readDo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
+			CN = new DBConnect().getCN();
+			
 			String whereDate = "DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
 			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 1 && " + whereDate
 				+ "ORDER BY todo_no asc";
@@ -111,7 +111,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -122,6 +124,8 @@ public class lifeDAO {
 	public ArrayList<todoModel> readTo(String Date){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
+			CN = new DBConnect().getCN();
+			
 			String whereDate = " DATE(todoDate) = \'" + Date + "\'";
 			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 && "  + whereDate
 				+ "ORDER BY todo_no asc";
@@ -133,7 +137,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -144,6 +150,8 @@ public class lifeDAO {
 	public ArrayList<todoModel> readDo(String Date){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
+			CN = new DBConnect().getCN();
+			
 			String whereDate = " DATE(todoDate) = \'" + Date + "\'";
 			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 1 &&" + whereDate
 				+ "ORDER BY todo_no asc";
@@ -155,7 +163,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -166,6 +176,8 @@ public class lifeDAO {
 	public ArrayList<diaryModel> readDiary(){
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		try{
+			CN = new DBConnect().getCN();
+			
 			msg = "SELECT diary_no, title, diaryContents, diaryDate FROM diary " 
 				+ "ORDER BY diaryDate asc";
 			ST = CN.createStatement();
@@ -177,7 +189,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -188,6 +202,7 @@ public class lifeDAO {
 	public ArrayList<diaryModel> readDiary(int year, int month){
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		try{
+			CN = new DBConnect().getCN();
 			int endDay = 0;
 			
 				switch (month) {
@@ -224,7 +239,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("출력연결에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -235,6 +252,7 @@ public class lifeDAO {
 	public diaryModel readDiaryDetail(String diaryDate){
 		diaryModel dm = new diaryModel();
 		try{
+			CN = new DBConnect().getCN();
 			msg = "SELECT * FROM diary where DATE(diaryDate) = \'" + diaryDate + "\'"; 
 			ST = CN.createStatement();
 			RS = ST.executeQuery(msg);
@@ -248,7 +266,9 @@ public class lifeDAO {
 		}catch(Exception e){System.out.println("한건 상세 에러 " + e);
 		}finally {
             try {
-                ST.close();
+            	if(RS!=null)RS.close();
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -259,10 +279,19 @@ public class lifeDAO {
 	//diary 삭제 함수
 	public void diaryDelete(String diaryDate){
 		try{
+			CN = new DBConnect().getCN();
 			msg = "DELETE FROM diary where DATE(diaryDate) = \'" + diaryDate + "\'";
 			ST = CN.createStatement();
 			ST.executeUpdate(msg);
 			System.out.println("삭제처리 성공");
 		}catch(Exception ex){System.out.println(ex); }
+		finally {
+            try {
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 	}
 }

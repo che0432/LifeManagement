@@ -1,7 +1,5 @@
 package front;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
@@ -23,23 +21,23 @@ public class diaryList extends JPanel {
 	diaryList(){		
 		//상단 패널
 		JPanel topP = new JPanel();
-		topP.setBackground(Color.white);		
+		menu.colorWhite(topP);
 		
 		//날짜 입력 패널
 		JPanel dateP = new JPanel();
-		dateP.setBackground(Color.white);
+		menu.colorWhite(dateP);
 		yearT = new JTextField(menu.yearValue);
 		yearT.setPreferredSize(new Dimension(80, 40));
 		yearT.setFont(menu.f4);
 		yearL = new JLabel("년");
-		yearL.setBackground(Color.white);
+		menu.colorWhite(yearL);
 		yearL.setFont(menu.f4);
 		monthC = new JComboBox(month);
 		monthC.getModel().setSelectedItem(menu.monthValue);
 		monthC.setFont(menu.f4);
-		monthC.setBackground(Color.white);
+		menu.colorWhite(monthC);
 		monthL = new JLabel("월");
-		monthL.setBackground(Color.white);
+		menu.colorWhite(monthL);
 		monthL.setFont(menu.f4);
 		dateP.add(yearT);
 		dateP.add(yearL);
@@ -53,23 +51,26 @@ public class diaryList extends JPanel {
 		
 		//다이어리 목록 조회 패널
 		JPanel dcp = new JPanel();
-		menu.panelWhite(dcp);
-		dcp.setLayout(new BorderLayout());
+		menu.panelWhiteBorder(dcp);
 		dcp.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 50));
 		
 		//다이어리 테이블 패널
 		JPanel diaryP = new JPanel();
 		diaryP.setPreferredSize(new Dimension(800, 600));
-		diaryP.setBackground(Color.white);
+		menu.colorWhite(diaryP);
 		diaryT = new diaryTable();
-		diaryT.setBackground(Color.white);
+		menu.colorWhite(diaryT);
 		diaryP.add(diaryT);
 		
 		//버튼 패널
 		JPanel butp = new JPanel();
-		menu.panelWhite(butp);
+		menu.colorWhite(butp);
 		diaryReadB = new JButton("날짜 조회");
 		diaryDetail = new JButton("상세보기");
+		menu.colorBlack(diaryReadB);
+		diaryReadB.setFont(menu.f3);
+		menu.colorBlack(diaryDetail);
+		diaryDetail.setFont(menu.f3);
 		butp.add(diaryReadB);
 		butp.add(diaryDetail);
 		

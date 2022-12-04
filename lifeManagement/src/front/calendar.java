@@ -2,6 +2,7 @@ package front;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -14,9 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class calendar extends JPanel implements ItemListener {
-	
-	
-	
 	JPanel p1, p2, form;
 	JLabel yearL, monthL;
     JComboBox month;
@@ -24,6 +22,8 @@ public class calendar extends JPanel implements ItemListener {
     int days[]={31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     String weekdays[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     int months[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    
+    Font f4 = new Font("KoPub돋움체 Medium", Font.PLAIN, 25);
     
     @SuppressWarnings("deprecation")
 	public calendar()
@@ -37,15 +37,21 @@ public class calendar extends JPanel implements ItemListener {
         {
             month.addItem(months[i]);
         }
+        month.setFont(f4);
+		month.setBackground(Color.white);
         month.addItemListener(this);
         year = new JComboBox();
         for(int i=1980;i<=2099;i++)
         {
             year.addItem(i);
         }
+        year.setFont(f4);
+        year.setBackground(Color.white);
         year.addItemListener(this);
-        yearL = new JLabel("년");
+        yearL = new JLabel("년 ");
         monthL = new JLabel("월");
+        yearL.setFont(f4);
+        monthL.setFont(f4);
         p1.add(year);
         p1.add(yearL);
         p1.add(month);
@@ -119,26 +125,21 @@ public class calendar extends JPanel implements ItemListener {
 
         for(int i=1, day=1;day<=noOfDaysInMonth;i++){
         	String today = LocalDate.now().toString();
+        	JLabel label;
+        	boolean isToday;
             for(int j=0;j<7;j++){
                 if(day==1){
                     if(j==date.getDay()){
-                    	JLabel label = new JLabel(String.valueOf(day));
-                    	System.out.println(label.getText().equals(LocalDate.now()));
-                    	boolean isToday = (inputYear+"-"+inputMonth+"-"+label.getText()).equals(today);
-                        if(isToday)
-                    		label.setForeground(Color.blue);
+                    	label = new JLabel(String.valueOf(day));
                         label.setHorizontalAlignment(SwingConstants.RIGHT);
                         p2.add(label);
                         day++;
                     }else {
-                    	JLabel label = new JLabel("");
+                    	label = new JLabel("");
                         p2.add(label);
                     }
                 }else {	
-                	JLabel label = new JLabel(String.valueOf(day));
-                	boolean isToday = (inputYear+"-"+inputMonth+"-"+label.getText()).equals(today);
-                    if(isToday)
-                		label.setForeground(Color.blue);
+                	label = new JLabel(String.valueOf(day));
                     label.setHorizontalAlignment(SwingConstants.RIGHT);
                     p2.add(label);
                     day++;
@@ -146,6 +147,18 @@ public class calendar extends JPanel implements ItemListener {
                 if(day>noOfDaysInMonth){
                     break;
                 }
+                
+                String equalDay = label.getText();
+                
+                if(equalDay!=null&&equalDay!="") {
+                    int a = Integer.parseInt(equalDay);
+                    if(a<10)
+                    	equalDay = "0" + a;
+                }
+
+                isToday = (inputYear+"-"+inputMonth+"-"+equalDay).equals(today);
+                if(isToday)
+            		label.setForeground(Color.red);
             }
         }
         

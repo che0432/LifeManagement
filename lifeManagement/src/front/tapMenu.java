@@ -2,6 +2,7 @@ package front;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -30,11 +31,13 @@ public class tapMenu extends JPanel {
 	int nowDayOfMonth = now.getDayOfMonth();
 	
 	String monthValue = now.format(DateTimeFormatter.ofPattern("MM"));
-	String yearValue = now.format(DateTimeFormatter.ofPattern("yyyy"));
+	String yearValue = now.format(DateTimeFormatter.ofPattern("yyyy"));	
 	
 	Font f1 = new Font("KoPub돋움체 Medium", Font.BOLD, 30);
 	Font f2 = new Font("KoPub돋움체 Light", Font.PLAIN, 15);
+	Font f3 = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
 	Font f4 = new Font("KoPub돋움체 Medium", Font.PLAIN, 25);
+	Font f5 = new Font("KoPub돋움체 Medium", Font.PLAIN, 15);
 	
 	ImageIcon diaryImg = new ImageIcon("./image/diaryButton.png");
 	ImageIcon todoImg = new ImageIcon("./image/todoButton.png");
@@ -42,12 +45,11 @@ public class tapMenu extends JPanel {
 	ImageIcon createImg = new ImageIcon("./image/createButton.png");
 	ImageIcon createRolloverImg = new ImageIcon("./image/createRolloverButton.png");
 	
-	tapMenu(){
-	
+	tapMenu(){	
 	//전체 패널
 	form = new JPanel();
 	form.setLayout(new BoxLayout(form,BoxLayout.X_AXIS));
-	panelWhite(form);
+	colorWhite(form);
 	
 	//갭 레이블
 	gap = new JLabel(" ");
@@ -97,15 +99,25 @@ public class tapMenu extends JPanel {
 		btn.setRolloverIcon(img); // 버튼에 마우스가 올라갈때 이미지 변환
 	}
 	
-	//패널 배경 하얗게 해주는 함수
-	public void panelWhite(JPanel form){
+	//패널 흰 배경, BorderLayout지정 함수
+	public void panelWhiteBorder(JPanel form){
 		form.setBackground(Color.white);
+		form.setLayout(new BorderLayout());
+	}
+	
+	//컴포넌트 흰 배경 지정 함수
+	public void colorWhite(Component c){
+		c.setBackground(Color.white);
+	}
+	
+	public void colorBlack(Component c){
+		c.setBackground(Color.black);
+		c.setForeground(Color.white);
 	}
 	
 	public void diaryMainPanel(JPanel main){
-		main.setLayout(new BorderLayout());
 		main.setPreferredSize(new Dimension(700,750));
-		panelWhite(main);
+		panelWhiteBorder(main);
 	}
 	
 	public JButton getTodoB(){

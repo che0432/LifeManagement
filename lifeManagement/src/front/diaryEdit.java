@@ -1,9 +1,6 @@
 package front;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,9 +10,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.UtilCalendarModel;
 
 public class diaryEdit extends JPanel {
 	tapMenu menu = new tapMenu();
@@ -28,64 +25,55 @@ public class diaryEdit extends JPanel {
 	String setEditDate = "0000-00-00";
 	String setEditContents = "";
 	
-	Font df = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
-	
 	String diaryPickDate;
 	
 	//JDatePicker
-    Properties p = new Properties();
-    
-    UtilDateModel model = new UtilDateModel();
-    JDatePanelImpl datePanel = new JDatePanelImpl(model,p);
-	JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+	UtilCalendarModel model = new UtilCalendarModel();
+    JDatePanel datePanel = new JDatePanel(model);
+	JDatePicker datePicker = new JDatePicker();
 	
 	public diaryEdit(){
 			//종합 패널
 			JPanel allP = new JPanel();
-			allP.setLayout(new BorderLayout());
-			menu.panelWhite(allP);
+			menu.panelWhiteBorder(allP);
 			
 			//상단 패널
 			JPanel topP = new JPanel();
-			topP.setLayout(new BorderLayout());
-			menu.panelWhite(topP);
+			menu.panelWhiteBorder(topP);
 			
 			//title 패널
 			JPanel tp = new JPanel();
-			menu.panelWhite(tp);
+			menu.colorWhite(tp);
 			titleL = new JLabel("제목: ");
-			titleL.setFont(df);
+			titleL.setFont(menu.f3);
 			title = new JTextField();
 			title.setPreferredSize(new Dimension(500, 30));
+			title.setFont(menu.f5);
 			tp.add(titleL);
 			tp.add(title);
 			
 			//date 패널
 			JPanel dp = new JPanel();
-			menu.panelWhite(dp);
+			menu.colorWhite(dp);
 			dateL = new JLabel("날짜: ");
-			dateL.setFont(df);
+			dateL.setFont(menu.f3);
 			//JDatePicker 구현
-			p.put("text.today", "Today");
-			p.put("text.month", "Month");
-			p.put("text.year", "Year");
-			
+
 			tp.add(dateL);
 			tp.add(datePicker);
 			
 			//contents 패널
 			JPanel cp = new JPanel();
 			cp.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
-			cp.setLayout(new BorderLayout());
-			menu.panelWhite(cp);
+			menu.panelWhiteBorder(cp);
 			contentsL = new JLabel("내용: ");
-			contentsL.setFont(df);
+			contentsL.setFont(menu.f3);
 			//내용
 			JPanel cc = new JPanel();
-			cc.setLayout(new BorderLayout());
-			menu.panelWhite(cc);
+			menu.panelWhiteBorder(cc);
 			cc.setPreferredSize(new Dimension(500, 300));
 			contents = new JTextArea();
+			contents.setFont(menu.f5);
 			contents.setLineWrap(true);
 			JScrollPane sp = new JScrollPane(contents);
 			cc.add(sp, "Center");
@@ -96,6 +84,8 @@ public class diaryEdit extends JPanel {
 			diaryEditSet();
 			
 			diaryEditSave = new JButton("저장");
+			menu.colorBlack(diaryEditSave);
+			diaryEditSave.setFont(menu.f4);
 			
 			topP.add("North", tp);
 			topP.add("South", dp);
@@ -121,8 +111,8 @@ public class diaryEdit extends JPanel {
 		day = Integer.parseInt(getDate[2]);
 		
 		title.setText(setEditTitle);
-		model.setDate(year, month, day);
-		model.setSelected(true);
+		datePicker.getModel().setDate(year, month, day);
+		datePicker.getModel().setSelected(true);
 		contents.setText(setEditContents);
 	}
 }

@@ -3,6 +3,7 @@ package front;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,7 +73,6 @@ public class memo extends JFrame implements ActionListener {
     		        while (fileStream.read( readBuffer ) != -1){}
 
     		        String rs = new String(readBuffer); //출력
-    		        System.out.println(rs);
     		        memo.setText(rs);
 
     		        fileStream.close(); //스트림 닫기S
@@ -84,8 +84,12 @@ public class memo extends JFrame implements ActionListener {
 	
 	class SouthPanel extends JPanel {
         public SouthPanel() {
-        	memoB = new JButton("저장");
         	setBackground(Color.white);
+        	memoB = new JButton("저장");
+        	memoB.setBackground(Color.black);
+        	memoB.setForeground(Color.white);
+        	memoB.setPreferredSize(new Dimension(150, 40));
+        	memoB.setFont(mf);
             add(memoB);
         }
     }

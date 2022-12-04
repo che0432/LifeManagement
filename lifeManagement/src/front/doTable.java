@@ -2,13 +2,18 @@ package front;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 
 import db.lifeDAO;
 import db.todoModel;
@@ -18,6 +23,9 @@ public class doTable  extends JPanel {
 	
 	lifeDAO ldao = new lifeDAO();
 	JTable table = null;
+	DefaultTableCellRenderer dtcr;
+	
+	Font f3 = new Font("KoPub돋움체 medium", Font.PLAIN, 15);
 	
 	public doTable(){
 		model = new DefaultTableModel(){
@@ -31,18 +39,25 @@ public class doTable  extends JPanel {
 			}
 		};
 		table = new JTable(model);
+		JTableHeader header = table.getTableHeader();
+	    header.setBackground(Color.black);
+	    header.setForeground(Color.white);
+	    header.setFont(f3);
 		
 		//�÷��־��ֱ�
 		model.addColumn("No");
-		model.addColumn("Check");
-		model.addColumn("Do");
+		model.addColumn("체크");
+		model.addColumn("내용");
 		
 		doTableRead();
+		tableCellCenter(table);
 		
-		table.getColumn("No").setPreferredWidth(1);
-		table.getColumn("Check").setPreferredWidth(20);
-		table.getColumn("Do").setPreferredWidth(320);
+		table.setRowHeight(30);
+		table.getColumn("No").setPreferredWidth(30);
+		table.getColumn("체크").setPreferredWidth(30);
+		table.getColumn("내용").setPreferredWidth(300);
 		table.setBackground(Color.white);
+		table.setFont(f3);
 		table.setPreferredScrollableViewportSize(new Dimension(410, 470));
 		table.setFillsViewportHeight(true);
 		table.getTableHeader().setReorderingAllowed(false);
@@ -89,6 +104,13 @@ public class doTable  extends JPanel {
 				model.addRow(new Object[1]);
 			}
 		}catch(IndexOutOfBoundsException e) {System.out.println(e);}
+	}
+	
+	public void tableCellCenter(JTable t){
+		dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcm = t.getColumnModel();
+		tcm.getColumn(0).setCellRenderer(dtcr);
 	}
 	
 	public int todoNoValue(){

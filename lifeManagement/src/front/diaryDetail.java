@@ -1,8 +1,5 @@
 package front;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,37 +12,32 @@ public class diaryDetail extends JPanel {
 	JButton diaryEdit, diaryDelete;
 	String diaryDetailTitle, diaryDetailDate, diaryDetailContents;
 	
-	Font df = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
-	
 	String diaryPickDate;
 	
 	diaryDetail(){		
 		//종합 패널
 		JPanel allP = new JPanel();
-		allP.setLayout(new BorderLayout());
-		menu.panelWhite(allP);
+		menu.panelWhiteBorder(allP);
 		
 		//상단 패널
 		JPanel topP = new JPanel();
-		topP.setLayout(new BorderLayout());
-		menu.panelWhite(topP);
+		menu.panelWhiteBorder(topP);
 		topP.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		
 		titleL = new JLabel();
-		titleL.setFont(df);
+		titleL.setFont(menu.f3);
 		topP.add("North", titleL);
 
 		dateL = new JLabel();
-		dateL.setFont(df);
+		dateL.setFont(menu.f3);
 		topP.add("Center", dateL);
 		
 		//contents 패널
 		JPanel cp = new JPanel();
-		cp.setLayout(new BorderLayout());
 		cp.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		menu.panelWhite(cp);
+		menu.panelWhiteBorder(cp);
 		contentsL = new JLabel();
-		contentsL.setFont(df);
+		contentsL.setFont(menu.f3);
 		cp.add(contentsL);
 		
 		setValue();
@@ -55,9 +47,14 @@ public class diaryDetail extends JPanel {
 
 		//버튼 패널
 		JPanel butp = new JPanel();
-		menu.panelWhite(butp);
+		menu.colorWhite(butp);
+		butp.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
 		diaryEdit = new JButton("수정");
 		diaryDelete = new JButton("삭제");
+		menu.colorBlack(diaryEdit);
+		diaryEdit.setFont(menu.f3);
+		menu.colorBlack(diaryDelete);
+		diaryDelete.setFont(menu.f3);
 		butp.add(diaryEdit);
 		butp.add(diaryDelete);
 		
