@@ -29,7 +29,7 @@ IDE: 이클립스
 Main.java - JFrame 컨테이너 제작/실행 파일  
 tapMenu.java - 사이드메뉴바와 기타 공통 요소를 묶어둔 JPanel  
 todoList.java - todo, 캘린더를 담은 JPanel  
-calendar.java - 캘린더 구현
+calendar.java - 캘린더 구현  
 diaryList.java - 일기 JPanel  
 toTable.java - 할 일 목록 Tap에 들어갈 테이블  
 doTable.java - 완료 목록 Tap에 들어갈 테이블  
@@ -37,7 +37,7 @@ diaryTable.java - 일기 목록 테이블
 diaryWrite.java - 일기 입력 페이지 
 diaryDetail.java - 일기 상세 페이지  
 diaryEdit.java - 일기 수정 페이지  
-memo.java - 메모 JFrame
+memo.java - 메모 JFrame  
 
 # back  
 todoWriteSave.java - todo 항목 추가  
