@@ -48,7 +48,6 @@ public class lifeDAO {
 		try {
 			CN = new DBConnect().getCN();
 			
-			//diary 날짜 중복 체크 함수 구현 필요
 			msg = "INSERT INTO diary(title, diaryContents, diaryDate) VALUES(?,?,?)";
 			PST = CN.prepareStatement(msg);
 				PST.setString(1, dm.getTitle());
@@ -68,12 +67,12 @@ public class lifeDAO {
 		}
 	}
 	
+	//todo의 현재 날짜 할 일 항목 읽기 함수(할 일 탭)
 	public ArrayList<todoModel> readTo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
 			CN = new DBConnect().getCN();
-			System.out.println("todoList.todoPickDate="+todoList.todoPickDate);
-			
+		
 			String whereDate = "DATE(todoDate) = \'" + todoList.todoPickDate + "\'";
 			msg = "SELECT todo_no, todoCheck, todoContents, todoDate FROM todo WHERE todoCheck = 0 && " + whereDate
 				+ "ORDER BY todo_no asc";
@@ -95,6 +94,7 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//todo의 현재 날짜 완료 항목 읽기 함수(완료 탭)
 	public ArrayList<todoModel> readDo(){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
@@ -121,6 +121,7 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//todo의 toTable 날짜로 항목 읽기 함수(할 일 탭)
 	public ArrayList<todoModel> readTo(String Date){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
@@ -147,6 +148,7 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//todo의 doTable 날짜로 항목 읽기 함수(완료 탭)
 	public ArrayList<todoModel> readDo(String Date){
 		ArrayList<todoModel> arr = new ArrayList<todoModel>();
 		try{
@@ -173,6 +175,7 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//diary 날짜 모든 항목 읽기 함수
 	public ArrayList<diaryModel> readDiary(){
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		try{
@@ -199,32 +202,34 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//diary 날짜로 항목 읽기 함수
 	public ArrayList<diaryModel> readDiary(int year, int month){
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		try{
 			CN = new DBConnect().getCN();
 			int endDay = 0;
-			
-				switch (month) {
-					case 1: endDay = 31; break;		
-					case 2:
-						if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0 )
-							endDay = 29;
-						else
-							endDay = 28;
-						break;
-					case 3: endDay = 31; break;
-					case 4: endDay = 30; break;
-					case 5: endDay = 31; break;
-					case 6: endDay = 30; break;
-					case 7: 
-					case 8: endDay = 31; break;
-					case 9: endDay = 30; break;
-					case 10: endDay = 31; break;
-					case 11: endDay = 30; break;
-					case 12: endDay = 31; break;
-					default: break;
-				}
+				
+			//달(month)에 따라 마지막 날짜를 조정
+			switch (month) {
+				case 1: endDay = 31; break;		
+				case 2:
+					if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0 )
+						endDay = 29;
+					else
+						endDay = 28;
+					break;
+				case 3: endDay = 31; break;
+				case 4: endDay = 30; break;
+				case 5: endDay = 31; break;
+				case 6: endDay = 30; break;
+				case 7: 
+				case 8: endDay = 31; break;
+				case 9: endDay = 30; break;
+				case 10: endDay = 31; break;
+				case 11: endDay = 30; break;
+				case 12: endDay = 31; break;
+				default: break;
+			}
 			
 			String whereDate = "WHERE DATE(diaryDate) between \'" + year + "-" + month + "-01\' and \'" 
 					+ year + "-" + month + "-" + endDay  + "\' ";
@@ -249,6 +254,7 @@ public class lifeDAO {
 		return arr;
 	}
 	
+	//diary 상세 읽기 함수
 	public diaryModel readDiaryDetail(String diaryDate){
 		diaryModel dm = new diaryModel();
 		try{
@@ -263,7 +269,7 @@ public class lifeDAO {
                 dm.setDiaryDate(RS.getString("diaryDate"));
 			}
 			
-		}catch(Exception e){System.out.println("한건 상세 에러 " + e);
+		}catch(Exception e){System.out.println("일기 상세 에러 " + e);
 		}finally {
             try {
             	if(RS!=null)RS.close();
@@ -276,6 +282,97 @@ public class lifeDAO {
 		return dm;
 	}
 	
+	//todo 수정 함수
+	public void todoUpdate(todoModel tm){
+		try {
+			CN = new DBConnect().getCN();
+			
+			msg = "UPDATE todo SET todoContents=? WHERE todo_no=?";
+			PST = CN.prepareStatement(msg);
+				PST.setString(1, tm.getTodoContents());
+				PST.setInt(2, tm.getTodo_no());
+		   	PST.executeUpdate();
+		   	System.out.println("todoUpdate(todoModel)수정성공");
+		   	System.out.println(PST.executeUpdate());
+		}catch(Exception ex){System.out.println(ex); }
+		finally{
+			 try {
+					if(PST!=null)PST.close();
+					if(CN!=null)CN.close();
+			   } catch (Exception e2) {
+				   e2.printStackTrace();
+			   }
+		}
+	}
+	
+	//todo 완료 상태 수정 함수
+	public void todoCheck(todoModel tm){
+		try {
+			CN = new DBConnect().getCN();
+			
+			msg = "UPDATE todo SET todoCheck=? WHERE todo_no=?";
+			PST = CN.prepareStatement(msg);
+				PST.setBoolean(1, tm.isTodoCheck());
+				PST.setInt(2, tm.getTodo_no());
+		   	PST.executeUpdate();
+		   	System.out.println("todoCheck(todoModel)수정성공");
+		   	System.out.println(PST.executeUpdate());
+		}catch(Exception ex){System.out.println(ex); }
+		finally{
+			 try {
+					if(PST!=null)PST.close();
+					if(CN!=null)CN.close();
+			   } catch (Exception e2) {
+				   e2.printStackTrace();
+			   }
+		}
+	}
+	
+	//diary 수정 함수
+	public void diaryUpdate(diaryModel dm){
+		try {
+			CN = new DBConnect().getCN();
+			
+			msg = "UPDATE diary SET title=?, diaryContents=?, diaryDate=? WHERE diary_no=?";
+			PST = CN.prepareStatement(msg);
+				PST.setString(1, dm.getTitle());
+				PST.setString(2, dm.getDiaryContents());
+				PST.setString(3, dm.getDiaryDate());
+			   	PST.setInt(4, dm.getDiary_no());
+		   	PST.executeUpdate();
+		   	System.out.println("diaryUpdate(diaryModel)수정성공");
+		   	System.out.println(PST.executeUpdate());
+		}catch(Exception ex){System.out.println(ex); }
+		finally{
+			 try {
+					if(PST!=null)PST.close();
+					if(CN!=null)CN.close();
+			   } catch (Exception e2) {
+				   e2.printStackTrace();
+			   }
+		}
+	}
+	
+	//todo 삭제 함수
+	public void todoDelete(todoModel tm){
+		try{
+			CN = new DBConnect().getCN();
+			msg = "DELETE FROM todo WHERE todo_no = " + tm.getTodo_no();
+			ST = CN.createStatement();
+			ST.executeUpdate(msg);
+			System.out.println("todo 삭제처리 성공");
+		}catch(Exception ex){System.out.println(ex); }
+		finally {
+            try {
+            	if(ST!=null)ST.close();
+            	if(CN!=null)CN.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+	}
+	
+	
 	//diary 삭제 함수
 	public void diaryDelete(String diaryDate){
 		try{
@@ -283,7 +380,7 @@ public class lifeDAO {
 			msg = "DELETE FROM diary where DATE(diaryDate) = \'" + diaryDate + "\'";
 			ST = CN.createStatement();
 			ST.executeUpdate(msg);
-			System.out.println("삭제처리 성공");
+			System.out.println("diary 삭제처리 성공");
 		}catch(Exception ex){System.out.println(ex); }
 		finally {
             try {

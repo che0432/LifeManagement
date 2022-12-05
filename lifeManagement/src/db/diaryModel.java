@@ -6,9 +6,9 @@ public class diaryModel {
 	String diaryDate;
 	
 	public diaryModel(){
-		
 	}
 	
+	//읽기 함수에서 사용 하는 ArrayList
 	public diaryModel(int diary_no, String title, String diaryContents, String diaryDate) {
         this.diary_no = diary_no;
         this.title = title;
@@ -16,6 +16,7 @@ public class diaryModel {
         this.diaryDate = diaryDate;
     }
 
+	//getter&setter
 	public String getTitle() {
 		return title;
 	}
@@ -47,6 +48,4 @@ public class diaryModel {
 	public void setDiary_no(int diary_no) {
 		this.diary_no = diary_no;
 	}
-	
-
 }

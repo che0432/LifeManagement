@@ -7,16 +7,12 @@ public class todoEditSave {
 	todoModel tm = new todoModel();
 	lifeDAO ldao = new lifeDAO();
 	
+	//입력 값 전달
 	public todoEditSave(String a, int b){
-		
 		try{
-			ldao.msg = "UPDATE todo SET todoContents=? WHERE todo_no=?";
-			ldao.PST = ldao.CN.prepareStatement(ldao.msg);
-			ldao.PST.setString(1, a);
-			ldao.PST.setInt(2, b);
-				
-			ldao.PST.executeUpdate();
-				System.out.println(" 수정  성공했습니다 "); 
-			 }catch(Exception ex){System.out.println("todoEditSave.java 수정에러 " + ex);}
+			tm.setTodoContents(a);
+			tm.setTodo_no(b);
+			ldao.todoUpdate(tm); //lifeDAO.todoUpdate()
+		}catch(Exception ex){System.out.println("todoEditSave.java 수정에러 " + ex);}
 	}
 }

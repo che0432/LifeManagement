@@ -32,6 +32,7 @@ public class calendar extends JPanel implements ItemListener {
         p1 = new JPanel();
         p1.setBackground(Color.white);
         
+        //month 선택할 콤보박스 및 아이템 리스너 선언
         month = new JComboBox();
         for(int i=0;i< months.length;i++)
         {
@@ -40,6 +41,7 @@ public class calendar extends JPanel implements ItemListener {
         month.setFont(f4);
 		month.setBackground(Color.white);
         month.addItemListener(this);
+        //year 선택할 콤보박스 및 아이템 리스너 선언
         year = new JComboBox();
         for(int i=1980;i<=2099;i++)
         {
@@ -48,21 +50,28 @@ public class calendar extends JPanel implements ItemListener {
         year.setFont(f4);
         year.setBackground(Color.white);
         year.addItemListener(this);
+        
+        //레이블 추가
         yearL = new JLabel("년 ");
         monthL = new JLabel("월");
         yearL.setFont(f4);
         monthL.setFont(f4);
+        
+        //상단 패널에 추가
         p1.add(year);
         p1.add(yearL);
         p1.add(month);
         p1.add(monthL);
+        
         p2 = new JPanel();
         p2.setLayout(new GridLayout(0,7,5,5));
         p2.setBackground(Color.white);
         Date date = new Date();
-
+        
+        //달력 그리기
         drawCalendar(date.getMonth(), (1900+date.getYear()));
-
+        
+        //실행했을 때 콤보박스 아이템 세팅
         year.setSelectedItem((1900+date.getYear()));
         month.setSelectedItem(months[date.getMonth()]);
         
@@ -73,13 +82,15 @@ public class calendar extends JPanel implements ItemListener {
     }
     @Override
     public void itemStateChanged(ItemEvent e)
-    {
+    {	
+    	//아이템을 선택하면 다시 캘린더 그리기
         if(e.getStateChange() == ItemEvent.SELECTED)
         {
             drawCalendar((Integer)month.getSelectedItem(), (Integer)year.getSelectedItem());
         }
     }
     
+    //달력 그리는 함수
     public void drawCalendar(int inputMonth, int inputYear)
     {	
     	String Month = null;
@@ -89,6 +100,7 @@ public class calendar extends JPanel implements ItemListener {
             label.setHorizontalAlignment(SwingConstants.RIGHT);
             p2.add(label);
         }
+        //숫자로 선택한 날짜를 Date형에 맞게 변경
         for(int i=0; i<months.length; i++){
         	if(inputMonth==1)
         		Month = "January";
@@ -147,21 +159,18 @@ public class calendar extends JPanel implements ItemListener {
                 if(day>noOfDaysInMonth){
                     break;
                 }
-                
                 String equalDay = label.getText();
-                
                 if(equalDay!=null&&equalDay!="") {
                     int a = Integer.parseInt(equalDay);
                     if(a<10)
                     	equalDay = "0" + a;
                 }
-
+                //현재 날짜인지 비교해보고, 현재 날짜와 같으면 빨간색으로 표시
                 isToday = (inputYear+"-"+inputMonth+"-"+equalDay).equals(today);
                 if(isToday)
             		label.setForeground(Color.red);
             }
         }
-        
         p2.validate();
     }
 }

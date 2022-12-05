@@ -24,21 +24,24 @@ public class tapMenu extends JPanel {
 
 	JPanel buttonP;
 	
-	//현재 날짜 표시
+	//현재 날짜 가져오기
 	LocalDate now = LocalDate.now();
 	int nowYear = now.getYear();
 	int nowMonthValue = now.getMonthValue();
 	int nowDayOfMonth = now.getDayOfMonth();
 	
+	//날짜 format 정의
 	String monthValue = now.format(DateTimeFormatter.ofPattern("MM"));
 	String yearValue = now.format(DateTimeFormatter.ofPattern("yyyy"));	
 	
+	//폰트 정의
 	Font f1 = new Font("KoPub돋움체 Medium", Font.BOLD, 30);
 	Font f2 = new Font("KoPub돋움체 Light", Font.PLAIN, 15);
 	Font f3 = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
 	Font f4 = new Font("KoPub돋움체 Medium", Font.PLAIN, 25);
 	Font f5 = new Font("KoPub돋움체 Medium", Font.PLAIN, 15);
 	
+	//이미지 경로 정의
 	ImageIcon diaryImg = new ImageIcon("./image/diaryButton.png");
 	ImageIcon todoImg = new ImageIcon("./image/todoButton.png");
 	ImageIcon memoImg = new ImageIcon("./image/memoButton.png");
@@ -51,7 +54,7 @@ public class tapMenu extends JPanel {
 	form.setLayout(new BoxLayout(form,BoxLayout.X_AXIS));
 	colorWhite(form);
 	
-	//갭 레이블
+	//컴포넌트 간 갭 레이블
 	gap = new JLabel(" ");
 	gap.setPreferredSize(new Dimension(50, 10));
 	gap2 = new JLabel(" ");
@@ -70,6 +73,7 @@ public class tapMenu extends JPanel {
 	buttonP.setPreferredSize(new Dimension(300,750));
 	buttonP.setBackground(Color.black);
 	
+	//메뉴 버튼 디자인
 	todoB = new JButton(todoImg);
 	diaryB = new JButton(diaryImg);
 	memoB = new JButton(memoImg);
@@ -89,7 +93,8 @@ public class tapMenu extends JPanel {
 	createB.setBorderPainted(false);
 	createB.setRolloverIcon(createRolloverImg);
 	}
-
+	
+	//메뉴 버튼 디자인 함수
 	public void buttonSet(JButton btn, String location) {
 		ImageIcon img = new ImageIcon(location);
 		btn.setBackground(Color.black);
@@ -110,16 +115,19 @@ public class tapMenu extends JPanel {
 		c.setBackground(Color.white);
 	}
 	
+	//컴포넌트 검은 배경, 흰 글씨 지정 함수
 	public void colorBlack(Component c){
 		c.setBackground(Color.black);
 		c.setForeground(Color.white);
 	}
 	
+	//일기 패널 main 크기와 배경, 레이아웃 지정 함수
 	public void diaryMainPanel(JPanel main){
 		main.setPreferredSize(new Dimension(700,750));
 		panelWhiteBorder(main);
 	}
 	
+	//Main.java에서 이벤트 구현 시 필요한 버튼 가져오는 getter
 	public JButton getTodoB(){
 		return todoB;
 	}
@@ -135,5 +143,4 @@ public class tapMenu extends JPanel {
 	public JButton getCreateB() {
 		return createB;
 	}
-
 }

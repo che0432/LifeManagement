@@ -28,6 +28,7 @@ public class doTable  extends JPanel {
 	Font f3 = new Font("KoPub돋움체 medium", Font.PLAIN, 15);
 	
 	public doTable(){
+		//테이블 모델 생성
 		model = new DefaultTableModel(){
 			public Class<?> getColumnClass(int column){
 				switch(column){
@@ -38,20 +39,23 @@ public class doTable  extends JPanel {
 				}
 			}
 		};
+	    //컬럼 추가
+		model.addColumn("No");
+		model.addColumn("체크");
+		model.addColumn("내용");
+		
+		//테이블 생성
 		table = new JTable(model);
 		JTableHeader header = table.getTableHeader();
 	    header.setBackground(Color.black);
 	    header.setForeground(Color.white);
 	    header.setFont(f3);
 		
-		//�÷��־��ֱ�
-		model.addColumn("No");
-		model.addColumn("체크");
-		model.addColumn("내용");
-		
+		//테이블 항목 로드, 0번째 열 가운데 정렬 
 		doTableRead();
 		tableCellCenter(table);
 		
+		//테이블 디자인
 		table.setRowHeight(30);
 		table.getColumn("No").setPreferredWidth(30);
 		table.getColumn("체크").setPreferredWidth(30);
@@ -63,12 +67,14 @@ public class doTable  extends JPanel {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		
+		//스크롤 생성
 		int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 		int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 		JScrollPane js = new JScrollPane(table, v, h);
 		add(js);
 	}
 	
+	//테이블 항목 로드 함수
 	public void doTableRead(){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
@@ -76,7 +82,7 @@ public class doTable  extends JPanel {
 			ArrayList<todoModel> arr = new ArrayList<todoModel>();
 			arr = ldao.readDo();
 			
-			//목록 조회
+			//항목 추가
 			for(int i=0; i<=arr.size(); i++){
 				model.addRow(new Object[0]);
 				model.setValueAt((Integer)arr.get(i).getTodo_no(), i, 0);
@@ -87,15 +93,15 @@ public class doTable  extends JPanel {
 		}catch(IndexOutOfBoundsException e) {System.out.println(e);}
 	}
 	
+	//지정된 날짜를 가져와서 항목 재로드 함수
 	public void doTableRead(String Date){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
-		
 		try{
 			ArrayList<todoModel> arr = new ArrayList<todoModel>();
 			arr = ldao.readDo(Date);
 
-			//목록 조회
+			//항목 추가
 			for(int i=0; i<=arr.size(); i++){
 				model.addRow(new Object[0]);
 				model.setValueAt((Integer)arr.get(i).getTodo_no(), i, 0);
@@ -106,6 +112,7 @@ public class doTable  extends JPanel {
 		}catch(IndexOutOfBoundsException e) {System.out.println(e);}
 	}
 	
+	//0번째 열 가운데 정렬 함수
 	public void tableCellCenter(JTable t){
 		dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,6 +120,7 @@ public class doTable  extends JPanel {
 		tcm.getColumn(0).setCellRenderer(dtcr);
 	}
 	
+	//doTable의 선택한 항목의 값을 가져오는 함수(번호, 완료 상태, 내용)
 	public int todoNoValue(){
 		int row = table.getSelectedRow();
 		int value = (int) table.getValueAt(row, 0);

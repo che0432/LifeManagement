@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//한건상세 구현 필요
 public class diaryDetail extends JPanel {
 	tapMenu menu = new tapMenu();
 	JLabel titleL, contentsL, dateL;
@@ -24,10 +23,12 @@ public class diaryDetail extends JPanel {
 		menu.panelWhiteBorder(topP);
 		topP.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		
+		//제목
 		titleL = new JLabel();
 		titleL.setFont(menu.f3);
 		topP.add("North", titleL);
-
+		
+		//날짜
 		dateL = new JLabel();
 		dateL.setFont(menu.f3);
 		topP.add("Center", dateL);
@@ -67,10 +68,10 @@ public class diaryDetail extends JPanel {
 		add("Center", menu.form);
 	}
 	
+	//해당 항목 값을 가져와서 레이블에 세팅
 	public void setValue(){
 		titleL.setText("제목: " + diaryDetailTitle);
 		dateL.setText("날짜: " + diaryDetailDate);
 		contentsL.setText("내용: " + diaryDetailContents);
 	}
-
 }

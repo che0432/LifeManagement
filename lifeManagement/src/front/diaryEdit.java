@@ -33,77 +33,79 @@ public class diaryEdit extends JPanel {
 	JDatePicker datePicker = new JDatePicker();
 	
 	public diaryEdit(){
-			//종합 패널
-			JPanel allP = new JPanel();
-			menu.panelWhiteBorder(allP);
-			
-			//상단 패널
-			JPanel topP = new JPanel();
-			menu.panelWhiteBorder(topP);
-			
-			//title 패널
-			JPanel tp = new JPanel();
-			menu.colorWhite(tp);
-			titleL = new JLabel("제목: ");
-			titleL.setFont(menu.f3);
-			title = new JTextField();
-			title.setPreferredSize(new Dimension(500, 30));
-			title.setFont(menu.f5);
-			tp.add(titleL);
-			tp.add(title);
-			
-			//date 패널
-			JPanel dp = new JPanel();
-			menu.colorWhite(dp);
-			dateL = new JLabel("날짜: ");
-			dateL.setFont(menu.f3);
-			//JDatePicker 구현
+		//종합 패널
+		JPanel allP = new JPanel();
+		menu.panelWhiteBorder(allP);
+		
+		//상단 패널
+		JPanel topP = new JPanel();
+		menu.panelWhiteBorder(topP);
+		
+		//title 패널
+		JPanel tp = new JPanel();
+		menu.colorWhite(tp);
+		titleL = new JLabel("제목: ");
+		titleL.setFont(menu.f3);
+		title = new JTextField();
+		title.setPreferredSize(new Dimension(500, 30));
+		title.setFont(menu.f5);
+		tp.add(titleL);
+		tp.add(title);
+		
+		//date 패널
+		JPanel dp = new JPanel();
+		menu.colorWhite(dp);
+		dateL = new JLabel("날짜: ");
+		dateL.setFont(menu.f3);
+		//JDatePicker 구현
 
-			tp.add(dateL);
-			tp.add(datePicker);
-			
-			//contents 패널
-			JPanel cp = new JPanel();
-			cp.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
-			menu.panelWhiteBorder(cp);
-			contentsL = new JLabel("내용: ");
-			contentsL.setFont(menu.f3);
-			//내용
-			JPanel cc = new JPanel();
-			menu.panelWhiteBorder(cc);
-			cc.setPreferredSize(new Dimension(500, 300));
-			contents = new JTextArea();
-			contents.setFont(menu.f5);
-			contents.setLineWrap(true);
-			JScrollPane sp = new JScrollPane(contents);
-			cc.add(sp, "Center");
-			
-			cp.add(contentsL, "North");
-			cp.add(cc, "Center");
-			
-			diaryEditSet();
-			
-			diaryEditSave = new JButton("저장");
-			menu.colorBlack(diaryEditSave);
-			diaryEditSave.setFont(menu.f4);
-			
-			topP.add("North", tp);
-			topP.add("South", dp);
-			
-			allP.add(topP, "North");
-			allP.add(cp, "Center");
-			
-			menu.main.add("Center", allP);
-			menu.main.add("South", diaryEditSave);
-			
-			menu.form.add("West", menu.buttonP);
-			menu.form.add("East", menu.main);
-			
-			add("Center", menu.form);
+		tp.add(dateL);
+		tp.add(datePicker);
+		
+		//contents 패널
+		JPanel cp = new JPanel();
+		cp.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
+		menu.panelWhiteBorder(cp);
+		contentsL = new JLabel("내용: ");
+		contentsL.setFont(menu.f3);
+		//내용
+		JPanel cc = new JPanel();
+		menu.panelWhiteBorder(cc);
+		cc.setPreferredSize(new Dimension(500, 300));
+		contents = new JTextArea();
+		contents.setFont(menu.f5);
+		contents.setLineWrap(true);
+		JScrollPane sp = new JScrollPane(contents);
+		cc.add(sp, "Center");
+		
+		cp.add(contentsL, "North");
+		cp.add(cc, "Center");
+		
+		//일기 상세 정보 세팅
+		diaryEditSet();
+		
+		//저장 버튼
+		diaryEditSave = new JButton("저장");
+		menu.colorBlack(diaryEditSave);
+		diaryEditSave.setFont(menu.f4);
+		
+		topP.add("North", tp);
+		topP.add("South", dp);
+		
+		allP.add(topP, "North");
+		allP.add(cp, "Center");
+		
+		menu.main.add("Center", allP);
+		menu.main.add("South", diaryEditSave);
+		
+		menu.form.add("West", menu.buttonP);
+		menu.form.add("East", menu.main);
+		
+		add("Center", menu.form);
 	}
 	
+	//일기 상세 정보 세팅 함수
 	public void diaryEditSet(){
-		//한건 상세 정보 set
 		String getDate[] = setEditDate.split("-");
 		int year, month, day;
 		year = Integer.parseInt(getDate[0]);

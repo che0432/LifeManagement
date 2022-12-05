@@ -7,9 +7,9 @@ public class todoModel {
 	boolean todoCheck;
 	
 	public todoModel(){
-		
 	}
 	
+	//읽기 함수에서 사용 하는 ArrayList
 	public todoModel(int todo_no, boolean todoCheck, String todoContents, String todoDate) {
         this.todo_no = todo_no;
         this.todoCheck = todoCheck;
@@ -17,6 +17,7 @@ public class todoModel {
         this.todoDate = todoDate;
     }
 	
+	//getter&setter
 	public String getTodoContents() {
 		return todoContents;
 	}
@@ -41,8 +42,11 @@ public class todoModel {
 		this.todoCheck = todoCheck;
 	}
 
+	public void setTodo_no(int todo_no) {
+		this.todo_no = todo_no;
+	}
+
 	public int getTodo_no() {
 		return todo_no;
 	}
-
 }

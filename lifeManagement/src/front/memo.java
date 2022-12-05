@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,20 +27,25 @@ public class memo extends JFrame implements ActionListener {
 	JButton memoB;
 	boolean memoVisible;
 	
+	//메모 색깔, 폰트
 	Color memoColor = new Color(255,250,176);
 	Color memoFontColor = new Color(192,109,21);
 	Font mf = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
 	
 	public memo() {
 		super("메모장");
+		
+		//Visible 상태 변수
 		memoVisible = isVisible();
 		
+		//컨테이너 입력 패널(CenterPanel), 저장 패널(SouthPanel) 추가
 		Container c = getContentPane();
 		c.setBackground(Color.white);
         c.setLayout(new BorderLayout());
         c.add(new CenterPanel(),BorderLayout.CENTER);
         c.add(new SouthPanel(),BorderLayout.SOUTH);
         
+        //저장 버튼 액션 리스너 선언
 		memoB.addActionListener(this);
 
 		setSize(500, 500);
@@ -48,6 +54,7 @@ public class memo extends JFrame implements ActionListener {
 		getContentPane().setBackground(Color.white);
 	}
 	
+	//입력 패널 함수
 	class CenterPanel extends JPanel {
         public CenterPanel() {
             setLayout(new BorderLayout());
@@ -59,6 +66,7 @@ public class memo extends JFrame implements ActionListener {
             JScrollPane sp = new JScrollPane(memo);
             add(sp, BorderLayout.CENTER);
             
+            //memo.txt 파일 읽기
     		BufferedOutputStream bs = null;
     		String fileName = "memo.txt";
     		
@@ -82,6 +90,7 @@ public class memo extends JFrame implements ActionListener {
         }
     }
 	
+	//저장 버튼 패널 함수
 	class SouthPanel extends JPanel {
         public SouthPanel() {
         	setBackground(Color.white);
@@ -94,11 +103,12 @@ public class memo extends JFrame implements ActionListener {
         }
     }
 
-	
+	//memo 실행
 	public static void main(String[] args) throws IOException {
 		new memo();
 	}
 	
+	//저장 버튼 클릭 시 memo.txt 파일 쓰기 함수
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()== memoB) {
@@ -116,11 +126,13 @@ public class memo extends JFrame implements ActionListener {
 			}
 		}
 	}
-
+	
+	//메모 Visible 상태 반환
 	public boolean isMemoVisible() {
 		return memoVisible;
 	}
 	
+	//메모 내용 getter
 	public String getMemo() {
 		return memo.getText();
 	}

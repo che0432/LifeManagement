@@ -80,6 +80,7 @@ public class diaryWrite extends JPanel  {
 		cp.add(contentsL, "North");
 		cp.add(cc, "Center");
 		
+		//저장 버튼
 		diarySave = new JButton("저장");
 		menu.colorBlack(diarySave);
 		diarySave.setFont(menu.f4);

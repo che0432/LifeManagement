@@ -28,7 +28,7 @@ public class diaryTable  extends JPanel {
 	Font f3 = new Font("KoPub돋움체 medium", Font.PLAIN, 20);
 	
 	public diaryTable(){
-		//모델 정해주기
+		//테이블 모델 생성
 		model = new DefaultTableModel(){
 			public Class<?> getColumnClass(int column){
 				switch(column){
@@ -39,20 +39,23 @@ public class diaryTable  extends JPanel {
 				}
 			}
 		};
-		//컬럼넣어주기
+		//컬럼 추가
 		model.addColumn("No");
 		model.addColumn("제목");
 		model.addColumn("날짜");
 		
+		//테이블 생성
 		table = new JTable(model);
 		JTableHeader header = table.getTableHeader();
 	    header.setBackground(Color.black);
 	    header.setForeground(Color.white);
 	    header.setFont(f3);
 		
+		//테이블 항목 로드, 0번째, 2번째 열 가운데 정렬 
 		diaryTableRead();
 		tableCellCenter(table);
 		
+		//테이블 디자인
 		table.setRowHeight(30);
 		table.getColumn("No").setPreferredWidth(1);
 		table.getColumn("제목").setPreferredWidth(460);
@@ -64,12 +67,14 @@ public class diaryTable  extends JPanel {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		
+		//스크롤 생성
 		int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 		int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 		JScrollPane js = new JScrollPane(table, v, h);
 		add(js);
 	}
 	
+	//테이블 항목 로드 함수
 	public void diaryTableRead(){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
@@ -77,7 +82,7 @@ public class diaryTable  extends JPanel {
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		arr = ldao.readDiary();
 		
-		//값 넣어주기
+		//항목 추가
 		for(int i=0; i<=arr.size()-1; i++){
 			model.addRow(new Object[0]);
 			model.setValueAt((Integer)arr.get(i).getDiary_no(), i, 0);
@@ -87,6 +92,7 @@ public class diaryTable  extends JPanel {
 		}
 	}
 	
+	//지정된 날짜를 가져와서 항목 재로드 함수
 	public void diaryTableRead(int year, int month){
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.setNumRows(0);
@@ -94,7 +100,7 @@ public class diaryTable  extends JPanel {
 		ArrayList<diaryModel> arr = new ArrayList<diaryModel>();
 		arr = ldao.readDiary(year, month);	
 		
-		//값 넣어주기
+		//항목 추가
 		for(int i=0; i<=arr.size()-1; i++){
 			model.addRow(new Object[0]);
 			model.setValueAt((Integer)arr.get(i).getDiary_no(), i, 0);
@@ -104,6 +110,7 @@ public class diaryTable  extends JPanel {
 		}
 	}
 	
+	//0번째, 2번째 열 가운데 정렬 함수
 	public void tableCellCenter(JTable t){
 		dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,6 +119,7 @@ public class diaryTable  extends JPanel {
 		tcm.getColumn(2).setCellRenderer(dtcr);
 	}
 	
+	//diaryTable의 선택한 항목의 값을 가져오는 함수(날짜, 번호)
 	public Object diaryDateValue(){
 		int row = table.getSelectedRow();
 		Object value = table.getValueAt(row, 2);
